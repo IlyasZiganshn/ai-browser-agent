@@ -1,0 +1,47 @@
+# ===== Secrets =====
+.env
+.env.*
+*.key
+*.pem
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+.venv/
+ENV/
+
+# ===== Playwright / Browser =====
+userdata/
+screens/
+playwright-report/
+trace.zip
+
+# ===== Logs =====
+logs/
+*.log
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+
+# ===== Tests / Coverage =====
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ===== Misc =====
+*.sqlite3
+*.db
