@@ -1,6 +1,40 @@
 # ai-browser-agent
 
+![Python 3.11+](https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)
+![OpenAI-compatible](https://img.shields.io/badge/LLM-OpenAI--compatible-412991?logo=openai&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![CI](https://github.com/Pinger1456/ai-browser-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Pinger1456/ai-browser-agent/actions/workflows/ci.yml)
+
 Autonomous LLM-driven browser agent. Give it a task in plain Russian, it plans the steps and executes them in a real browser via Playwright — navigating, clicking by text, typing into inputs, checking goal completion.
+
+## How it works
+
+```mermaid
+flowchart LR
+    U[Task in RU] --> A[Agent.run]
+    A --> G{Goal reached?}
+    G -- yes --> D[Done]
+    G -- no --> P[ask_llm history + system prompt]
+    P --> T{tool_calls?}
+    T -- navigate --> B1[Playwright: goto URL]
+    T -- click --> B2[click_by_text semantic]
+    T -- type_text --> B3[fill input]
+    T -- none --> N[nudge: keep going]
+    B1 --> H[append result to history]
+    B2 --> H
+    B3 --> H
+    N --> H
+    H --> G
+```
+
+Bounded to 10 steps. Each step: check goal → LLM → tool call → append → repeat.
+
+## Run preview
+
+![Agent run](./docs/run-preview.svg)
+
+_Left: bounded step loop with tool-calls. Right: final page where `is_article_page()` returns `true`._
 
 ## Shape
 
@@ -88,6 +122,10 @@ Bounded steps prevent infinite loops. `is_article_page()` is the goal predicate 
 
 `agent/safety.py` blocks any task containing "оплат", "удал", "подтвердить платеж". Blunt keyword filter — not a security boundary, just a guardrail against obviously wrong asks.
 
-## Note on this repo
+## Interview crib sheet
 
-Recovered after a filesystem incident that corrupted parts of the working tree. Most files were restored intact from git blobs. **`config.py` and `browser/controller.py` were rebuilt from context** — their contracts were fully specified by the callers (`agent/llm.py` imports `GLM_API_KEY, GLM_BASE_URL, LLM_MODEL, LLM_TEMPERATURE, LLM_MAX_TOKENS`; `agent/planner.py` calls `browser.navigate / click_by_text / type_text / is_article_page`; `tools/schema.py` defines the `scroll(pixels)` tool). Behaviour should match; internal details of the original — inaccessible.
+See [`INTERVIEW_NOTES.md`](./INTERVIEW_NOTES.md) — the actual reasoning behind each architectural choice, plus expected questions.
+
+## License
+
+MIT — see [`LICENSE`](./LICENSE).

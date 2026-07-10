@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif">
+  <rect width="1000" height="560" fill="#0f172a"/>
+
+  <!-- left: agent log terminal -->
+  <rect x="24" y="24" width="460" height="512" rx="10" fill="#0b1220" stroke="#334155"/>
+  <circle cx="46" cy="46" r="6" fill="#f87171"/>
+  <circle cx="66" cy="46" r="6" fill="#fbbf24"/>
+  <circle cx="86" cy="46" r="6" fill="#34d399"/>
+  <text x="254" y="50" font-size="12" text-anchor="middle" fill="#94a3b8" font-family="ui-monospace, Menlo, monospace">ai-browser-agent — main.py</text>
+
+  <g font-family="ui-monospace, Menlo, monospace" font-size="12">
+    <text x="42" y="90" fill="#7ed3a3">task <tspan fill="#e2e8f0">"Зайди на wikipedia.org и открой</tspan></text>
+    <text x="42" y="106" fill="#e2e8f0">      статью про Джеффри Эпштейна"</text>
+
+    <text x="42" y="140" fill="#6ab7f0">[step 1]</text>
+    <text x="42" y="158" fill="#e2e8f0">goal? → false</text>
+    <text x="42" y="176" fill="#e2e8f0">llm → tool_call navigate</text>
+    <text x="42" y="194" fill="#f0b862">  navigate("https://ru.wikipedia.org")</text>
+    <text x="42" y="212" fill="#a8bdd3">  ← page loaded (34ms)</text>
+
+    <text x="42" y="242" fill="#6ab7f0">[step 2]</text>
+    <text x="42" y="260" fill="#e2e8f0">goal? → false</text>
+    <text x="42" y="278" fill="#e2e8f0">llm → tool_call click</text>
+    <text x="42" y="296" fill="#f0b862">  click_by_text("Найти")</text>
+
+    <text x="42" y="326" fill="#6ab7f0">[step 3]</text>
+    <text x="42" y="344" fill="#e2e8f0">llm → tool_call type_text</text>
+    <text x="42" y="362" fill="#f0b862">  type_text("Джеффри Эпштейн")</text>
+
+    <text x="42" y="392" fill="#6ab7f0">[step 4]</text>
+    <text x="42" y="410" fill="#e2e8f0">llm → tool_call click</text>
+    <text x="42" y="428" fill="#f0b862">  click_by_text("Эпштейн, Джеффри")</text>
+    <text x="42" y="446" fill="#a8bdd3">  ← navigated to /wiki/...</text>
+
+    <text x="42" y="476" fill="#6ab7f0">[step 5]</text>
+    <text x="42" y="494" fill="#7ed3a3">goal? → true (is_article_page)</text>
+    <text x="42" y="512" fill="#7ed3a3">DONE: Открыта статья</text>
+  </g>
+
+  <!-- right: mock browser -->
+  <rect x="516" y="24" width="460" height="512" rx="10" fill="#ffffff" stroke="#334155"/>
+  <rect x="516" y="24" width="460" height="44" rx="10" fill="#f1f5f9"/>
+  <circle cx="536" cy="46" r="5" fill="#cbd5e1"/>
+  <circle cx="552" cy="46" r="5" fill="#cbd5e1"/>
+  <circle cx="568" cy="46" r="5" fill="#cbd5e1"/>
+  <rect x="588" y="34" width="370" height="24" rx="6" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="600" y="50" font-size="11" fill="#334155" font-family="ui-monospace, Menlo, monospace">ru.wikipedia.org/wiki/Эпштейн,_Джеффри</text>
+
+  <text x="540" y="106" font-size="22" font-weight="700" fill="#0f172a">Эпштейн, Джеффри</text>
+  <text x="540" y="126" font-size="11" fill="#64748b">Материал из Википедии — свободной энциклопедии</text>
+
+  <line x1="540" y1="140" x2="952" y2="140" stroke="#e2e8f0"/>
+
+  <rect x="540" y="152" width="140" height="180" rx="4" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="610" y="248" font-size="11" text-anchor="middle" fill="#94a3b8">[portrait]</text>
+
+  <text x="700" y="170" font-size="11" font-weight="600" fill="#334155">Дата рождения:</text>
+  <text x="700" y="186" font-size="11" fill="#475569">20 января 1953</text>
+  <text x="700" y="212" font-size="11" font-weight="600" fill="#334155">Место рождения:</text>
+  <text x="700" y="228" font-size="11" fill="#475569">Бруклин, Нью-Йорк</text>
+  <text x="700" y="254" font-size="11" font-weight="600" fill="#334155">Гражданство:</text>
+  <text x="700" y="270" font-size="11" fill="#475569">США</text>
+  <text x="700" y="296" font-size="11" font-weight="600" fill="#334155">Род деятельности:</text>
+  <text x="700" y="312" font-size="11" fill="#475569">финансист</text>
+
+  <text x="540" y="360" font-size="12" fill="#334155">Джеффри Эдвард Эпштейн — американский финансист,</text>
+  <text x="540" y="378" font-size="12" fill="#334155">осуждённый за преступления сексуального характера.</text>
+  <text x="540" y="396" font-size="12" fill="#334155">Работал в Bear Stearns, затем основал собственную</text>
+  <text x="540" y="414" font-size="12" fill="#334155">финансовую компанию J. Epstein &amp; Co.</text>
+
+  <rect x="540" y="490" width="80" height="24" rx="4" fill="#dcfce7"/>
+  <text x="580" y="506" font-size="11" text-anchor="middle" fill="#166534" font-weight="700">is_article ✓</text>
+</svg>
