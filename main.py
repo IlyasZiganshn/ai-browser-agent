@@ -11,7 +11,7 @@ async def main():
 
     try:
         await agent.run(
-            "Зайди на wikipedia.org и открой статью про Джеффри Эпштейна"
+            "Зайди на wikipedia.org и открой статью про FastAPI"
         )
     finally:
         await browser.close()

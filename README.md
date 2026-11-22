@@ -4,7 +4,7 @@
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)
 ![OpenAI-compatible](https://img.shields.io/badge/LLM-OpenAI--compatible-412991?logo=openai&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-[![CI](https://github.com/Pinger1456/ai-browser-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Pinger1456/ai-browser-agent/actions/workflows/ci.yml)
+[![CI](https://github.com/IlyasZiganshn/ai-browser-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/IlyasZiganshn/ai-browser-agent/actions/workflows/ci.yml)
 
 Autonomous LLM-driven browser agent. Give it a task in plain Russian, it plans the steps and executes them in a real browser via Playwright — navigating, clicking by text, typing into inputs, checking goal completion.
 
@@ -45,14 +45,12 @@ agent/
 ├── planner.py               # Agent.run(): step loop with LLM tool-calls
 ├── llm.py                   # OpenAI-compatible client (GLM/Zhipu by default)
 ├── system_prompt.py         # single system message: "one action per step"
-├── safety.py                # keyword blocklist (оплата, удаление, платёж)
-└── memory.py                # (placeholder for conversation state)
+└── safety.py                # keyword blocklist (оплата, удаление, платёж)
 browser/
 ├── controller.py            # Playwright wrapper: navigate / click_by_text / type_text / scroll / is_article_page
 └── dom.py                   # extract_semantic_dom() — pull first 50 buttons/links/inputs for the prompt
 tools/
-├── schema.py                # OpenAI tool-calling schema: navigate / click / scroll / type_text
-└── actions.py               # (placeholder for reusable action helpers)
+└── schema.py                # OpenAI tool-calling schema: navigate / click / scroll / type_text
 ```
 
 ## Why this shape
@@ -60,7 +58,7 @@ tools/
 The point wasn't to build "another Playwright wrapper with LLM". Two design lines:
 
 - **LLM as planner, browser as pure I/O.** The agent has zero domain logic. It reads `history`, asks the LLM for the next tool call, executes it, appends the result, loops up to 10 steps. All planning lives in the LLM, all effects live in `BrowserController`.
-- **Actions grounded in semantic DOM, not selectors.** `click_by_text("Джеффри Эпштейн")` uses `page.get_by_text()` which survives CSS-class churn. No `page.locator(".css-1x2y3z")` in the codebase.
+- **Actions grounded in semantic DOM, not selectors.** `click_by_text("FastAPI")` uses `page.get_by_text()` which survives CSS-class churn. No `page.locator(".css-1x2y3z")` in the codebase.
 
 ## Run
 
@@ -79,7 +77,7 @@ python main.py
 The default task in `main.py` is:
 
 ```
-Зайди на wikipedia.org и открой статью про Джеффри Эпштейна
+Зайди на wikipedia.org и открой статью про FastAPI
 ```
 
 ## Environment
@@ -115,16 +113,12 @@ Bounded steps prevent infinite loops. `is_article_page()` is the goal predicate 
 
 - No screenshot-based grounding. Purely text-based DOM inspection. For pages that hide meaningful content behind icons/canvas — this fails and it should, honestly.
 - No sub-agents / multi-turn planner. Single LLM call per step, single action per step. Faster to debug, easier to reason about.
-- No persistence between runs. Agent forgets everything on exit. Add `agent/memory.py` implementation if you want cross-run learning.
+- No persistence between runs. The agent forgets everything on exit. Cross-run learning needs a store that does not exist here.
 - No parallel tabs. One browser, one page. Simpler.
 
 ## Safety
 
 `agent/safety.py` blocks any task containing "оплат", "удал", "подтвердить платеж". Blunt keyword filter — not a security boundary, just a guardrail against obviously wrong asks.
-
-## Interview crib sheet
-
-See [`INTERVIEW_NOTES.md`](./INTERVIEW_NOTES.md) — the actual reasoning behind each architectural choice, plus expected questions.
 
 ## License
 
