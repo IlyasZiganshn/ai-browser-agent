@@ -1,10 +1,11 @@
 from openai import OpenAI
+
 from config import (
     GLM_API_KEY,
     GLM_BASE_URL,
+    LLM_MAX_TOKENS,
     LLM_MODEL,
     LLM_TEMPERATURE,
-    LLM_MAX_TOKENS,
 )
 from tools.schema import TOOLS
 

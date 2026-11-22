@@ -1,7 +1,8 @@
-import json
 import asyncio
-from agent.system_prompt import SYSTEM_PROMPT
+import json
+
 from agent.llm import ask_llm
+from agent.system_prompt import SYSTEM_PROMPT
 
 
 class Agent:
@@ -14,7 +15,7 @@ class Agent:
     async def run(self, task):
         self.history.append({"role": "user", "content": task})
 
-        for step in range(10):
+        for _step in range(10):
             await asyncio.sleep(1.5)
 
             if await self.browser.is_article_page():
